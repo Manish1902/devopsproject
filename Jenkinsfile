@@ -26,6 +26,13 @@ pipeline {
             }
         }
 
+        stage('Install Test Dependencies') {
+            steps {
+                // Install jest-junit for test reporting
+                bat 'npm install --save-dev jest-junit'
+            }
+        }
+
         stage('Build') {
             steps {
                 // Build the React project for production
@@ -57,7 +64,7 @@ pipeline {
         stage('Test') {
             steps {
                 // Run tests with Jest and output results in JUnit format
-                bat 'npm test -- --ci --reporters=jest-junit'
+                bat 'npm test -- --ci'
             }
             post {
                 always {
