@@ -74,15 +74,9 @@ pipeline {
     post {
         success {
             echo 'Build and deployment completed successfully!'
-            mail to: 'your-email@example.com',
-                 subject: "Jenkins Pipeline Succeeded: ${env.JOB_NAME} [${env.BUILD_NUMBER}] on branch ${BRANCH_NAME}",
-                 body: "The build and deployment of ${env.JOB_NAME} completed successfully. You can view the app at the configured URL."
         }
         failure {
             echo 'Build failed!'
-            mail to: 'your-email@example.com',
-                 subject: "Jenkins Pipeline Failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}] on branch ${BRANCH_NAME}",
-                 body: "Something went wrong with ${env.JOB_NAME}. Please check the Jenkins console output for more details."
         }
     }
 }
