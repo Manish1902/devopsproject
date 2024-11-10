@@ -2,6 +2,10 @@ module.exports = {
   transform: {
     '^.+\\.(js|jsx)$': 'babel-jest'
   },
+  moduleNameMapper: {
+    '\\.(css|less)$': 'identity-obj-proxy',
+    '\\.(svg|png|jpg|jpeg|gif)$': '<rootDir>/__mocks__/fileMock.js'
+  },
   reporters: [
     "default",
     [
