@@ -4,6 +4,6 @@ import App from './App';
 
 test('renders edit src/App.js and save to reload text', () => {
   render(<App />);
-  const linkElement = screen.getByText(/edit src\/App.js and save to reload/i);
+  const linkElement = screen.getByText('Edit src/App.js and save to reload.');
   expect(linkElement).toBeInTheDocument();
 });
