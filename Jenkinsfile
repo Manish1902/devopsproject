@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         NODE_VERSION = 'NodeJS 20' // Specify Node version if needed
-        BRANCH_NAME = "${env.GIT_BRANCH}"
+        BRANCH_NAME = "${env.GIT_BRANCH ?: 'main'}" // Default to 'main' if BRANCH_NAME is null
         TOMCAT_HOME = 'C:\\Program Files\\Apache Software Foundation\\Tomcat 11.0_Tomcat11_Temp' // Update with your Tomcat installation path
     }
 
@@ -40,22 +40,11 @@ pipeline {
             }
         }
 
-        stage('Package') {
+        stage('Deploy to Tomcat') {
             steps {
-                // Package the built application into a .war file (optional)
+                // Clean up previous deployment and copy new build files to Tomcat
                 bat '''
-                mkdir dist
-                xcopy /s /e /i /y /q build dist
-                cd dist
-                jar -cvf myapp.war *
-                '''
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                // Deploy the build folder to Tomcat
-                bat '''
+                rmdir /S /Q "%TOMCAT_HOME%\\webapps\\your-app"
                 xcopy /s /e /i /y /q build "%TOMCAT_HOME%\\webapps\\your-app"
                 '''
             }
@@ -83,11 +72,17 @@ pipeline {
     }
 
     post {
+        success {
+            echo 'Build and deployment completed successfully!'
+            mail to: 'your-email@example.com',
+                 subject: "Jenkins Pipeline Succeeded: ${env.JOB_NAME} [${env.BUILD_NUMBER}] on branch ${BRANCH_NAME}",
+                 body: "The build and deployment of ${env.JOB_NAME} completed successfully. You can view the app at the configured URL."
+        }
         failure {
             echo 'Build failed!'
             mail to: 'your-email@example.com',
-                 subject: "Jenkins Pipeline Failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
-                 body: "Something is wrong with ${env.JOB_NAME}. Please check console output."
+                 subject: "Jenkins Pipeline Failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}] on branch ${BRANCH_NAME}",
+                 body: "Something went wrong with ${env.JOB_NAME}. Please check the Jenkins console output for more details."
         }
     }
 }
