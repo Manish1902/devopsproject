@@ -2,8 +2,14 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders edit src/App.js and save to reload text', () => {
+test('renders welcome message', () => {
   render(<App />);
-  const linkElement = screen.getByText('Edit src/App.js and save to reload.');
-  expect(linkElement).toBeInTheDocument();
+  const welcomeElement = screen.getByText('Welcome to My React App');
+  expect(welcomeElement).toBeInTheDocument();
+});
+
+test('renders simple description', () => {
+  render(<App />);
+  const descriptionElement = screen.getByText('This is a simple React application.');
+  expect(descriptionElement).toBeInTheDocument();
 });
