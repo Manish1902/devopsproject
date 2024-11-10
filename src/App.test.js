@@ -10,6 +10,6 @@ test('renders welcome message', () => {
 
 test('renders simple description', () => {
   render(<App />);
-  const descriptionElement = screen.getByText('This is a simple React application made by Manish.');
+  const descriptionElement = screen.getByText('This is a simple React application made by Manish');
   expect(descriptionElement).toBeInTheDocument();
 });
