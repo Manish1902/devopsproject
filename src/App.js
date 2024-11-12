@@ -5,8 +5,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Welcome to My React App</h1>
-        <p>This is a simple React application made by Abhishek</p>
+        <h1>Welcome to My DevOps Application</h1>
+        <p>This is made by Abhishek</p>
+        <p>Enjoy!!!</p>
       </header>
     </div>
   );
